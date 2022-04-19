@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class SetToZeroIfMaxFELTest {
-
     @Test
     public void testZeroOutFELMaxes1() {
         IntList L = IntList.of(1, 22, 15);
@@ -21,8 +20,10 @@ public class SetToZeroIfMaxFELTest {
 
     @Test
     public void testZeroOutFELMaxes3() {
-        IntList L = IntList.of(5, 535, 35, 11, 10, 0);
+        IntList L = IntList.of(5, 1, 1, 5, 5, 0);
         IntListExercises.setToZeroIfMaxFEL(L);
-        assertEquals("0 -> 0 -> 35 -> 0 -> 10 -> 0", L.toString());
+        System.out.println(L.toString());
+        assertEquals("0 -> 0 -> 0 -> 0 -> 0 -> 0", L.toString());
     }
+
 }
