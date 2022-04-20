@@ -1,8 +1,13 @@
+/* First part of project 1
+* Deque implemented by linked list
+* @author Yi Dingcheng
+* */
 package deque;
 
 import afu.org.checkerframework.checker.igj.qual.I;
 
 public class LinkedListDeque<T> {
+    /*Inner class of Node*/
     private class IntNode {
         public T item;
         public IntNode next;
@@ -21,6 +26,7 @@ public class LinkedListDeque<T> {
         sentinel.prev = sentinel;
         size = 0;
     }
+
     public void addFirst(T item) {
         IntNode node = new IntNode(item, sentinel.next, sentinel);
         sentinel.next = node;
