@@ -1,27 +1,28 @@
 /* First part of project 1
-* Deque implemented by linked list
-* @author Yi Dingcheng
-* */
+ * Deque implemented by linked list
+ * @author Yi Dingcheng
+ * */
 package deque;
-
-import afu.org.checkerframework.checker.igj.qual.I;
 
 public class LinkedListDeque<T> {
     /*Inner class of Node*/
     private class IntNode {
-        public T item;
-        public IntNode next;
-        public IntNode prev;
+        private T item;
+        private IntNode next;
+        private IntNode prev;
+
         public IntNode(T i, IntNode n, IntNode p) {
             item = i;
             next = n;
             prev = p;
         }
     }
+
     private int size;
-    private IntNode sentinel;
+    private final IntNode sentinel;
+
     public LinkedListDeque() {
-        sentinel = new IntNode(null, sentinel, sentinel);
+        sentinel = new IntNode(null, null, null);
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
         size = 0;
@@ -33,12 +34,14 @@ public class LinkedListDeque<T> {
         node.next.prev = node;
         size += 1;
     }
+
     public void addLast(T item) {
         IntNode node = new IntNode(item, sentinel, sentinel.prev);
         sentinel.prev = node;
         node.prev.next = node;
         size += 1;
     }
+
     public T get(int index) {
         if (size < index + 1 || index < 0) {
             return null;
@@ -57,11 +60,12 @@ public class LinkedListDeque<T> {
         if (index == 0) {
             return p.item;
         } else {
-            return getIndexRecursive(index-1, p.next);
+            return getIndexRecursive(index - 1, p.next);
         }
 
 
     }
+
     public T removeFirst() {
         if (isEmpty()) {
             return null;
@@ -72,6 +76,7 @@ public class LinkedListDeque<T> {
         size -= 1;
         return p.item;
     }
+
     public T removeLast() {
         if (isEmpty()) {
             return null;
@@ -82,9 +87,11 @@ public class LinkedListDeque<T> {
         size -= 1;
         return p.item;
     }
+
     public int size() {
         return size;
     }
+
     public boolean isEmpty() {
         return size == 0;
     }
