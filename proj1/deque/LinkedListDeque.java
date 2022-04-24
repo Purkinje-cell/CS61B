@@ -53,14 +53,14 @@ public class LinkedListDeque<T> {
         return p.item;
     }
 
-    public T getIndexRecursive(int index, IntNode p) {
+    public T getRecursive(int index, IntNode p) {
         if (size < index + 1 || index < 0) {
             return null;
         }
         if (index == 0) {
             return p.item;
         } else {
-            return getIndexRecursive(index - 1, p.next);
+            return getRecursive(index - 1, p.next);
         }
 
 
