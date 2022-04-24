@@ -4,18 +4,16 @@
  * */
 package deque;
 
-import jh61b.junit.In;
-
 import java.util.Iterator;
 
-public class LinkedListDeque<T> implements Deque<T> {
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     /*Inner class of Node*/
     private class IntNode {
         private T item;
         private IntNode next;
         private IntNode prev;
 
-        public IntNode(T i, IntNode n, IntNode p) {
+        IntNode(T i, IntNode n, IntNode p) {
             item = i;
             next = n;
             prev = p;

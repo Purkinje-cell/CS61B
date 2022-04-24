@@ -7,7 +7,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T> {
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     /*Deque Size*/
     private int size;
@@ -42,11 +42,11 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
     /*iterator class*/
-    private class ArrayDequeIterator<T> implements Iterator<T> {
+    private class ArrayDequeIterator implements Iterator<T> {
         private int currPos;
         private int passed;
 
-        public ArrayDequeIterator() {
+        ArrayDequeIterator() {
             currPos = head;
             passed = 0;
         }
@@ -56,7 +56,7 @@ public class ArrayDeque<T> implements Deque<T> {
         }
 
         public T next() {
-            T ret = (T) items[currPos];
+            T ret = items[currPos];
             currPos = addOne(currPos);
             passed += 1;
             return ret;
@@ -64,7 +64,7 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
     public Iterator<T> iterator() {
-        return new ArrayDequeIterator<T>();
+        return new ArrayDequeIterator();
     }
 
     /*method to minus "one" in index */
@@ -86,31 +86,17 @@ public class ArrayDeque<T> implements Deque<T> {
     /*method to resize of the Deque*/
     private void resize(int size) {
         T[] newArray = (T[]) new Object[size];
-        if (size < items.length) { // shrink the Array
-            for (int i = 0; i < this.size; i++) {
-                System.arraycopy(items, head, newArray, i, 1);
-                head = addOne(head);
-            }
-            head = 0;
-            tail = this.size;
-            items = newArray;
-        } else { // enlarge the array
-            int finalHead = head + size - items.length;
-            if (tail <= head) {
-                System.arraycopy(items, 0, newArray, 0, tail);
-                System.arraycopy(items, head, newArray, finalHead, items.length - head);
-            } else {
-                System.arraycopy(items, head, newArray, finalHead, tail - head + 1);
-                tail = tail + size - items.length;
-            }
-            head = size - (items.length - head);
+        for (int i = 0; i < this.size; i++) {
+            System.arraycopy(items, head, newArray, i, 1);
+            head = addOne(head);
         }
+        head = 0;
+        tail = this.size;
         items = newArray;
     }
 
     @Override
-    /*method to add item in the tail*/
-    public void addLast(T item) {
+    /*method to add item in the tail*/ public void addLast(T item) {
         if (size == items.length) {
             resize(size * 2);
         }
