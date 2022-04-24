@@ -4,6 +4,10 @@
 
 package deque;
 
+import afu.org.checkerframework.checker.oigj.qual.O;
+
+import java.util.Iterator;
+
 public class ArrayDeque<T> implements Deque<T> {
     private T[] items;
     /*Deque Size*/
@@ -18,6 +22,51 @@ public class ArrayDeque<T> implements Deque<T> {
         size = 0;
         head = 0;
         tail = 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof ArrayDeque) {
+            if (this.size == ((ArrayDeque<?>) o).size) {
+                for (int i = 0; i <= this.size; i++) {
+                    if (this.get(i) != ((ArrayDeque<?>) o).get(i)) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /*iterator class*/
+    private class ArrayDequeIterator<T> implements Iterator<T> {
+        private int currPos;
+        private int passed;
+
+        public ArrayDequeIterator() {
+            currPos = head;
+            passed = 0;
+        }
+
+        public boolean hasNext() {
+            return passed < size;
+        }
+
+        public T next() {
+            T ret = (T) items[currPos];
+            currPos = addOne(currPos);
+            passed += 1;
+            return ret;
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator<T>();
     }
 
     /*method to minus "one" in index */
@@ -48,11 +97,12 @@ public class ArrayDeque<T> implements Deque<T> {
             tail = this.size;
             items = newArray;
         } else { // enlarge the array
+            int finalHead = head + size - items.length;
             if (tail <= head) {
                 System.arraycopy(items, 0, newArray, 0, tail);
-                System.arraycopy(items, head, newArray, head + size - items.length, items.length - head);
+                System.arraycopy(items, head, newArray, finalHead, items.length - head);
             } else {
-                System.arraycopy(items, head, newArray, head + size - items.length, tail - head + 1);
+                System.arraycopy(items, head, newArray, finalHead, tail - head + 1);
                 tail = tail + size - items.length;
             }
             head = size - (items.length - head);
@@ -120,7 +170,7 @@ public class ArrayDeque<T> implements Deque<T> {
     @Override
     public void printDeque() {
         for (int i = head; i != tail; i = addOne(i)) {
-            System.out.print(items[i]+" ");
+            System.out.print(items[i] + " ");
         }
         System.out.println();
     }
@@ -133,4 +183,6 @@ public class ArrayDeque<T> implements Deque<T> {
         }
         return items[i];
     }
+
+
 }

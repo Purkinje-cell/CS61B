@@ -4,7 +4,11 @@
  * */
 package deque;
 
-public class LinkedListDeque<T> implements Deque<T>{
+import jh61b.junit.In;
+
+import java.util.Iterator;
+
+public class LinkedListDeque<T> implements Deque<T> {
     /*Inner class of Node*/
     private class IntNode {
         private T item;
@@ -18,8 +22,53 @@ public class LinkedListDeque<T> implements Deque<T>{
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof LinkedListDeque) {
+            if (this.size == ((LinkedListDeque<?>) o).size) {
+                IntNode a = this.sentinel;
+                LinkedListDeque<?>.IntNode b = ((LinkedListDeque<?>) o).sentinel;
+                for (int i = 0; i < this.size; i++) {
+                    a = a.next;
+                    b = b.next;
+                    if (a.item != b.item) return false;
+                }
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    private class LinkedListDequeIterator<T> implements Iterator<T> {
+        private IntNode p;
+
+        public LinkedListDequeIterator() {
+            p = sentinel.next;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return p.next != sentinel;
+        }
+
+        @Override
+        public T next() {
+            IntNode ret = p;
+            p = p.next;
+            return (T) ret.item;
+        }
+    }
+
     private int size;
     private final IntNode sentinel;
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListDequeIterator<T>();
+    }
 
     public LinkedListDeque() {
         sentinel = new IntNode(null, null, null);
@@ -57,11 +106,12 @@ public class LinkedListDeque<T> implements Deque<T>{
     }
 
     private T getRecursiveHelp(int index, IntNode p) {
-       if (index == 0) {
-           return p.item;
-       }
-       return getRecursiveHelp(index - 1, p.next);
+        if (index == 0) {
+            return p.item;
+        }
+        return getRecursiveHelp(index - 1, p.next);
     }
+
     public T getRecursive(int index) {
         if (size < index + 1 || index < 0) {
             return null;
