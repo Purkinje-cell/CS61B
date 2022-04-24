@@ -4,7 +4,7 @@
  * */
 package deque;
 
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T>{
     /*Inner class of Node*/
     private class IntNode {
         private T item;
@@ -28,6 +28,7 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
+    @Override
     public void addFirst(T item) {
         IntNode node = new IntNode(item, sentinel.next, sentinel);
         sentinel.next = node;
@@ -35,6 +36,7 @@ public class LinkedListDeque<T> {
         size += 1;
     }
 
+    @Override
     public void addLast(T item) {
         IntNode node = new IntNode(item, sentinel, sentinel.prev);
         sentinel.prev = node;
@@ -42,6 +44,7 @@ public class LinkedListDeque<T> {
         size += 1;
     }
 
+    @Override
     public T get(int index) {
         if (size < index + 1 || index < 0) {
             return null;
@@ -53,19 +56,20 @@ public class LinkedListDeque<T> {
         return p.item;
     }
 
-    public T getRecursive(int index, IntNode p) {
+    private T getRecursiveHelp(int index, IntNode p) {
+       if (index == 0) {
+           return p.item;
+       }
+       return getRecursiveHelp(index - 1, p.next);
+    }
+    public T getRecursive(int index) {
         if (size < index + 1 || index < 0) {
             return null;
         }
-        if (index == 0) {
-            return p.item;
-        } else {
-            return getRecursive(index - 1, p.next);
-        }
-
-
+        return getRecursiveHelp(index, sentinel.next);
     }
 
+    @Override
     public T removeFirst() {
         if (isEmpty()) {
             return null;
@@ -77,6 +81,7 @@ public class LinkedListDeque<T> {
         return p.item;
     }
 
+    @Override
     public T removeLast() {
         if (isEmpty()) {
             return null;
@@ -88,14 +93,12 @@ public class LinkedListDeque<T> {
         return p.item;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
+    @Override
     public void printDeque() {
         IntNode p = sentinel;
         while (p.next != sentinel) {
