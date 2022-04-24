@@ -45,14 +45,21 @@ public class ArrayDequeTest {
         // should be empty
         for (int i = 1; i <= 10; i++) {
             lld1.addLast(i);
-            lld1.addFirst(i);
         }
         for (int i = 1; i <= 15; i++) {
             lld1.removeLast();
         }
-        for (int i = 1; i <= 15; i++) {
-            lld1.addFirst(i);
-        }
+        lld1.addFirst(0);
+        lld1.addFirst(1);
+        lld1.removeFirst();
+        lld1.isEmpty();
+        lld1.addFirst(4);
+        lld1.removeFirst();
+        lld1.size();
+        lld1.removeLast();
+        lld1.addLast(8);
+        lld1.addFirst(9);
+        lld1.addLast(10);
     }
 
     @Test

@@ -101,7 +101,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             resize(size * 2);
         }
         items[tail] = item;
-        tail += 1;
+        tail = addOne(tail);
         size += 1;
     }
 
