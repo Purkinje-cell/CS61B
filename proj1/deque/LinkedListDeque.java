@@ -65,7 +65,6 @@ public class LinkedListDeque<T> implements Deque<T> {
     private int size;
     private final IntNode sentinel;
 
-    @Override
     public Iterator<T> iterator() {
         return new LinkedListDequeIterator<T>();
     }
