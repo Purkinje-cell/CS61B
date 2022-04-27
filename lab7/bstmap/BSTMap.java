@@ -29,32 +29,32 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
     }
 
-  /*  private class BSTMapIterator implements Iterator<K>{
+    /*  private class BSTMapIterator implements Iterator<K>{
 
-        private int pos;
-        private BSTNode node;
-        private BSTNode next(BSTNode node, int pos) {
-            if (node != null) {
+          private int pos;
+          private BSTNode node;
+          private BSTNode next(BSTNode node, int pos) {
+              if (node != null) {
 
-            }
-        }
-        public BSTMapIterator() {
-            pos = 0;
-            node = root;
-        }
+              }
+          }
+          public BSTMapIterator() {
+              pos = 0;
+              node = root;
+          }
 
-        @Override
-        public boolean hasNext() {
-            return pos == size;
-        }
+          @Override
+          public boolean hasNext() {
+              return pos == size;
+          }
 
-        @Override
-        public K next() {
-            return null;
-        }
-    }
+          @Override
+          public K next() {
+              return null;
+          }
+      }
 
-   */
+     */
     private V search(K key, BSTNode node) {
         if (node == null) {
             return null;
@@ -103,11 +103,13 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
         return node;
     }
+
     private BSTNode deleteSmallest(BSTNode node) {
         if (node.left == null) return node.right;
         node.left = deleteSmallest(node.left);
         return node.right;
     }
+
     private BSTNode delete(K key, BSTNode node) {
         if (node == null) {
             return null;
@@ -130,6 +132,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
         return node;
     }
+
     public BSTMap() {
         size = 0;
         root = null;
@@ -196,5 +199,17 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     @Override
     public Iterator<K> iterator() {
         throw new UnsupportedOperationException("This operation is unsupported now");
+    }
+
+    private void printInOrder(BSTNode node) {
+        if (node != null) {
+            printInOrder(node.left);
+            System.out.println(node.key + ":" + node.value);
+            printInOrder(node.right);
+        }
+    }
+
+    public void printInOrder() {
+        printInOrder(root);
     }
 }
