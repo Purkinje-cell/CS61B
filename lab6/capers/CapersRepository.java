@@ -32,13 +32,17 @@ public class CapersRepository {
      *    - dogs/ -- folder containing all of the persistent data for dogs
      *    - story -- file containing the current story
      */
-    public static void setupPersistence() {
+    public static void setupPersistence() throws IOException {
         if (!CAPERS_FOLDER.exists()) {
             CAPERS_FOLDER.mkdir();
         }
         File dog = join(CAPERS_FOLDER, "/dogs");
         if (!dog.exists()) {
             dog.mkdir();
+        }
+        File story = join(CAPERS_FOLDER, "story.txt");
+        if (!story.exists()) {
+            story.createNewFile();
         }
     }
 
@@ -59,11 +63,10 @@ public class CapersRepository {
      * three non-command arguments of args (name, breed, age).
      * Also prints out the dog's information using toString().
      */
-    public static void makeDog(String name, String breed, int age) {
-        File newDog = join(CAPERS_FOLDER, "/dogs/", name, ".txt");
+    public static void makeDog(String name, String breed, int age) throws IOException {
         Dog dog = new Dog(name, breed, age);
         dog.saveDog();
-        dog.toString();
+        System.out.println(dog.toString());
     }
 
     /**
@@ -72,9 +75,10 @@ public class CapersRepository {
      * Chooses dog to advance based on the first non-command argument of args.
      * @param name String name of the Dog whose birthday we're celebrating.
      */
-    public static void celebrateBirthday(String name) {
-        File newDog = join(CAPERS_FOLDER, "/dogs/", name);
+    public static void celebrateBirthday(String name) throws IOException {
+        File newDog = join(CAPERS_FOLDER, "dogs", name + ".txt");
         Dog dog = readObject(newDog, Dog.class);
         dog.haveBirthday();
+        dog.saveDog();
     }
 }
